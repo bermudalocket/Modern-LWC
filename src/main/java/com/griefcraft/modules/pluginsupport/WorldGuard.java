@@ -27,7 +27,6 @@ package com.griefcraft.modules.pluginsupport;
  * either expressed or implied, of anybody else.
  */
 
-
 import com.griefcraft.cache.BlockCache;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Permission;
@@ -38,9 +37,8 @@ import com.griefcraft.scripting.event.LWCCommandEvent;
 import com.griefcraft.scripting.event.LWCProtectionRegisterEvent;
 import com.griefcraft.util.Colors;
 import com.griefcraft.util.config.Configuration;
-import com.sk89q.worldedit.BlockVector;
-import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.internal.permission.RegionPermissionModel;
@@ -67,6 +65,7 @@ public class WorldGuard extends JavaModule {
      * The WorldGuard plugin if it is enabled
      */
     private WorldGuardPlugin worldGuardPlugin = null;
+
 
     @Override
     public void load(LWC lwc) {
@@ -157,8 +156,8 @@ public class WorldGuard extends JavaModule {
             return;
         }
 
-        BlockVector minimum = region.getMinimumPoint();
-        BlockVector maximum = region.getMaximumPoint();
+        BlockVector3 minimum = region.getMinimumPoint();
+        BlockVector3 maximum = region.getMaximumPoint();
 
         // Min values
         int minBlockX = minimum.getBlockX();
@@ -356,7 +355,7 @@ public class WorldGuard extends JavaModule {
         }
 
         // Create a vector for the region
-        Vector vector = BukkitAdapter.asVector(block.getLocation());
+        BlockVector3 vector = BukkitAdapter.asVector(block.getLocation()).toBlockPoint();
 
         // Load the regions the block encompasses
         List<String> regions = regionManager.getApplicableRegionsIDs(vector);
